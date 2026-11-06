@@ -1,5 +1,8 @@
-# Uniregistro
+# angular_proyecto_final_Jorge_Escalante
 
+## Uniregistro
+
+Proyecto final de Programación Web, desarrollado con Angular 20 y Angular Material.
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.42.
 
 ## Development server
@@ -57,3 +60,4 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+

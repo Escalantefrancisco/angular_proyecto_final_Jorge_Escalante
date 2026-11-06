@@ -1,0 +1,19 @@
+
+[
+  {
+    "id": "Masculino",
+    "nombre": "Masculino"
+  },
+  {
+    "id": "Femenino",
+    "nombre": "Femenino"
+  },
+  {
+    "id": "Otro",
+    "nombre": "Otro"
+  },
+  {
+    "id": "Prefiero no indicar",
+    "nombre": "Prefiero no indicar"
+  }
+]

@@ -1,0 +1,24 @@
+
+[
+  {
+    "id": "2026-1",
+    "nombre": "Primer semestre 2026",
+    "fechaInicio": "2026-01-15",
+    "fechaFin": "2026-06-15",
+    "activo": false
+  },
+  {
+    "id": "2026-2",
+    "nombre": "Segundo semestre 2026",
+    "fechaInicio": "2026-07-15",
+    "fechaFin": "2026-12-15",
+    "activo": true
+  },
+  {
+    "id": "2027-1",
+    "nombre": "Primer semestre 2027",
+    "fechaInicio": "2027-01-15",
+    "fechaFin": "2027-06-15",
+    "activo": true
+  }
+]

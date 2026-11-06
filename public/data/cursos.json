@@ -1,0 +1,66 @@
+
+[
+  {
+    "id": "WEB101",
+    "codigo": "WEB101",
+    "nombre": "Programación Web",
+    "creditos": 4,
+    "carreraId": "SISTEMAS"
+  },
+  {
+    "id": "BD101",
+    "codigo": "BD101",
+    "nombre": "Bases de Datos",
+    "creditos": 4,
+    "carreraId": "SISTEMAS"
+  },
+  {
+    "id": "PRO101",
+    "codigo": "PRO101",
+    "nombre": "Programación I",
+    "creditos": 5,
+    "carreraId": "SISTEMAS"
+  },
+  {
+    "id": "RED101",
+    "codigo": "RED101",
+    "nombre": "Redes de Computadoras",
+    "creditos": 4,
+    "carreraId": "SISTEMAS"
+  },
+  {
+    "id": "ADM101",
+    "codigo": "ADM101",
+    "nombre": "Administración General",
+    "creditos": 4,
+    "carreraId": "ADMINISTRACION"
+  },
+  {
+    "id": "CON101",
+    "codigo": "CON101",
+    "nombre": "Contabilidad I",
+    "creditos": 4,
+    "carreraId": "ADMINISTRACION"
+  },
+  {
+    "id": "FIN101",
+    "codigo": "FIN101",
+    "nombre": "Finanzas Empresariales",
+    "creditos": 4,
+    "carreraId": "ADMINISTRACION"
+  },
+  {
+    "id": "DER101",
+    "codigo": "DER101",
+    "nombre": "Introducción al Derecho",
+    "creditos": 4,
+    "carreraId": "DERECHO"
+  },
+  {
+    "id": "DER102",
+    "codigo": "DER102",
+    "nombre": "Derecho Civil",
+    "creditos": 5,
+    "carreraId": "DERECHO"
+  }
+]

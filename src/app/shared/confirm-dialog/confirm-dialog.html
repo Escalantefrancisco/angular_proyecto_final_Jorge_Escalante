@@ -1,0 +1,37 @@
+
+<h2 mat-dialog-title>
+  <mat-icon class="icono-advertencia">
+    warning
+  </mat-icon>
+
+  {{ data.titulo }}
+</h2>
+
+<mat-dialog-content>
+  <p>{{ data.mensaje }}</p>
+  <p class="advertencia">
+    Esta acción no se puede deshacer.
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-stroked-button
+    type="button"
+    (click)="cancelar()">
+    Cancelar
+  </button>
+
+  <button
+    mat-flat-button
+    type="button"
+    class="boton-eliminar"
+    (click)="confirmar()">
+
+    <mat-icon>delete</mat-icon>
+    {{ data.textoConfirmar || 'Eliminar' }}
+
+  </button>
+
+</mat-dialog-actions>

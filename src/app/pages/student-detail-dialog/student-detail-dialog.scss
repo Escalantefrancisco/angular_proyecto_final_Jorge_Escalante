@@ -1,0 +1,117 @@
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+mat-dialog-content {
+  max-height: 70vh;
+  padding: 16px 24px;
+}
+
+.encabezado-estudiante {
+  text-align: center;
+  padding: 10px 0 20px;
+
+  h3 {
+    margin: 8px 0 4px;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 0;
+    color: #757575;
+  }
+}
+
+.avatar {
+  color: #1976d2;
+
+  mat-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
+  }
+}
+
+.titulo-seccion {
+  font-size: 16px;
+  color: #1976d2;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-top: 24px;
+}
+
+.datos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+
+  strong {
+    color: #555;
+    font-size: 12px;
+  }
+
+  span {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.dato-completo {
+  grid-column: 1 / -1;
+}
+
+.lista-contactos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contacto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: #f5f7fa;
+  border-radius: 8px;
+}
+
+.contacto-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  mat-icon {
+    color: #1976d2;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #757575;
+  }
+}
+
+@media (max-width: 600px) {
+  .datos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dato-completo {
+    grid-column: auto;
+  }
+
+  .contacto {
+    flex-wrap: wrap;
+  }
+}

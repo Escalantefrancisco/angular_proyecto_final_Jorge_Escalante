@@ -1,0 +1,40 @@
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icono-advertencia {
+  color: #ed6c02;
+}
+
+mat-dialog-content {
+  min-width: 0;
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+.advertencia {
+  color: #c62828;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+mat-dialog-actions {
+  padding: 12px 20px 20px;
+  gap: 10px;
+}
+
+.boton-eliminar {
+  background-color: #c62828 !important;
+  color: white !important;
+}
+
+@media (max-width: 600px) {
+  mat-dialog-actions {
+    flex-wrap: wrap;
+  }
+}

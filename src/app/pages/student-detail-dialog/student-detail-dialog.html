@@ -1,0 +1,148 @@
+
+<h2 mat-dialog-title>
+  <mat-icon>person</mat-icon>
+  Detalles del estudiante
+</h2>
+
+<mat-dialog-content>
+
+  <div class="encabezado-estudiante">
+    <div class="avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+
+    <h3>
+      {{ estudiante.nombres }}
+      {{ estudiante.apellidos }}
+    </h3>
+
+    <p>{{ estudiante.id }}</p>
+  </div>
+
+  <h3 class="titulo-seccion">
+    Datos personales
+  </h3>
+
+  <div class="datos-grid">
+
+    <div class="dato">
+      <strong>Código estudiantil</strong>
+      <span>{{ estudiante.id }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Nombres</strong>
+      <span>{{ estudiante.nombres }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Apellidos</strong>
+      <span>{{ estudiante.apellidos }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Fecha de nacimiento</strong>
+      <span>
+        {{ estudiante.fechaNacimiento | date:'dd/MM/yyyy':'UTC' }}
+      </span>
+    </div>
+
+    <div class="dato">
+      <strong>Género</strong>
+      <span>{{ estudiante.genero }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Correo electrónico</strong>
+      <span>{{ estudiante.correo }}</span>
+    </div>
+
+    <div class="dato dato-completo">
+      <strong>Dirección de residencia</strong>
+      <span>{{ estudiante.direccion }}</span>
+    </div>
+
+  </div>
+
+  <h3 class="titulo-seccion">
+    Datos académicos
+  </h3>
+
+  <div class="datos-grid">
+
+    <div class="dato">
+      <strong>Carrera</strong>
+      <span>
+        {{ obtenerCarrera(estudiante.carreraId) }}
+      </span>
+    </div>
+
+    <div class="dato">
+      <strong>Jornada</strong>
+      <span>{{ estudiante.jornada }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Modalidad</strong>
+      <span>{{ estudiante.modalidad }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Fecha de registro</strong>
+      <span>
+        {{ estudiante.fechaRegistro | date:'dd/MM/yyyy HH:mm' }}
+      </span>
+    </div>
+
+  </div>
+
+  <h3 class="titulo-seccion">
+    Números de contacto
+  </h3>
+
+  <div class="lista-contactos">
+
+    @for (
+      contacto of estudiante.contactos;
+      track $index
+    ) {
+
+      <div class="contacto">
+
+        <div class="contacto-info">
+          <mat-icon>phone</mat-icon>
+
+          <div>
+            <strong>{{ contacto.numero }}</strong>
+            <p>{{ contacto.tipo }}</p>
+          </div>
+        </div>
+
+        <mat-chip-set>
+          <mat-chip>
+            {{ contacto.activo ? 'Activo' : 'Inactivo' }}
+          </mat-chip>
+        </mat-chip-set>
+
+      </div>
+
+    } @empty {
+      <p>No hay contactos registrados.</p>
+    }
+
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="cerrar()">
+
+    Cerrar
+
+  </button>
+
+</mat-dialog-actions>

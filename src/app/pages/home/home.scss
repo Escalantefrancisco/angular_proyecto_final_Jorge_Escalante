@@ -1,0 +1,148 @@
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.encabezado {
+  margin-bottom: 25px;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #263238;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #757575;
+    font-size: 15px;
+  }
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.tarjeta {
+  border-radius: 12px;
+}
+
+.tarjeta-contenido {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 80px;
+}
+
+.icono {
+  width: 55px;
+  height: 55px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.azul {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.verde {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.naranja {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.rojo {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.informacion {
+  min-width: 0;
+
+  h2 {
+    font-size: 28px;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #757575;
+    font-size: 13px;
+  }
+}
+
+.seccion {
+  margin-bottom: 24px;
+  border-radius: 12px;
+
+  mat-card-content {
+    padding-top: 20px;
+  }
+
+  p {
+    line-height: 1.7;
+    color: #555;
+  }
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  a {
+    min-height: 42px;
+  }
+}
+
+// Tabletas
+@media (max-width: 1000px) {
+
+  .estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// Teléfonos
+@media (max-width: 600px) {
+
+  .encabezado h1 {
+    font-size: 22px;
+  }
+
+  .estadisticas {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .tarjeta-contenido {
+    min-height: 65px;
+  }
+
+  .acciones {
+    flex-direction: column;
+
+    a {
+      width: 100%;
+    }
+  }
+}

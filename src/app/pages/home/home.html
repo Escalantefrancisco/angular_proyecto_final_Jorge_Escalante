@@ -1,1 +1,195 @@
-<p>home works!</p>
+
+<div class="dashboard">
+
+  <!-- Encabezado -->
+  <div class="encabezado">
+    <h1>Panel principal</h1>
+    <p>
+      Bienvenido al sistema de gestión universitaria.
+    </p>
+  </div>
+
+  <!-- Tarjetas de estadísticas -->
+  <div class="estadisticas">
+
+    <mat-card class="tarjeta">
+      <mat-card-content>
+
+        <div class="tarjeta-contenido">
+
+          <div class="icono azul">
+            <mat-icon>people</mat-icon>
+          </div>
+
+          <div class="informacion">
+            <h2>{{ totalEstudiantes }}</h2>
+            <p>Estudiantes registrados</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="tarjeta">
+      <mat-card-content>
+
+        <div class="tarjeta-contenido">
+
+          <div class="icono verde">
+            <mat-icon>assignment</mat-icon>
+          </div>
+
+          <div class="informacion">
+            <h2>{{ totalInscripciones }}</h2>
+            <p>Total de inscripciones</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="tarjeta">
+      <mat-card-content>
+
+        <div class="tarjeta-contenido">
+
+          <div class="icono naranja">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+
+          <div class="informacion">
+            <h2>{{ inscripcionesActivas }}</h2>
+            <p>Inscripciones activas</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="tarjeta">
+      <mat-card-content>
+
+        <div class="tarjeta-contenido">
+
+          <div class="icono rojo">
+            <mat-icon>cancel</mat-icon>
+          </div>
+
+          <div class="informacion">
+            <h2>{{ inscripcionesCanceladas }}</h2>
+            <p>Inscripciones canceladas</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <!-- Accesos rápidos -->
+  <mat-card class="seccion">
+
+    <mat-card-header>
+      <mat-card-title>
+        Accesos rápidos
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Selecciona una opción para comenzar.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="acciones">
+
+        <a
+          mat-raised-button
+          color="primary"
+          routerLink="/estudiantes/nuevo">
+
+          <mat-icon>person_add</mat-icon>
+          Nuevo estudiante
+
+        </a>
+
+        <a
+          mat-raised-button
+          color="primary"
+          routerLink="/inscripciones/nueva">
+
+          <mat-icon>add_circle</mat-icon>
+          Nueva inscripción
+
+        </a>
+
+        <a
+          mat-stroked-button
+          routerLink="/estudiantes">
+
+          <mat-icon>list</mat-icon>
+          Ver estudiantes
+
+        </a>
+
+        <a
+          mat-stroked-button
+          routerLink="/inscripciones">
+
+          <mat-icon>assignment</mat-icon>
+          Ver inscripciones
+
+        </a>
+
+        <a
+          mat-stroked-button
+          routerLink="/respaldos">
+
+          <mat-icon>backup</mat-icon>
+          Respaldos
+
+        </a>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <!-- Información -->
+  <mat-card class="seccion">
+
+    <mat-card-header>
+      <mat-card-title>
+        Acerca de UniRegistro
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <p>
+        UniRegistro es una aplicación web para
+        administrar estudiantes e inscripciones
+        académicas de una universidad.
+      </p>
+
+      <p>
+        Permite registrar estudiantes, administrar
+        sus contactos, seleccionar cursos y períodos
+        académicos y gestionar inscripciones.
+      </p>
+
+      <p>
+        La información se almacena localmente en
+        el navegador mediante localStorage.
+      </p>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

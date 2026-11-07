@@ -1,0 +1,138 @@
+
+.barra-superior {
+  height: 64px;
+  background-color: #1976d2;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.titulo {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.subtitulo {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.contenedor-principal {
+  height: calc(100vh - 64px);
+  height: calc(100dvh - 64px);
+}
+
+.menu-lateral {
+  width: 250px;
+  background-color: #ffffff;
+}
+
+.encabezado-menu {
+  padding: 24px 16px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+
+  mat-icon {
+    color: #1976d2;
+    font-size: 38px;
+    width: 38px;
+    height: 38px;
+  }
+
+  h3 {
+    margin: 8px 0 0;
+    font-size: 17px;
+  }
+}
+
+mat-nav-list {
+  padding: 12px;
+
+  a {
+    margin-bottom: 6px;
+    border-radius: 8px;
+  }
+
+  .activo {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+}
+
+.pie-menu {
+  margin-top: 30px;
+  padding: 16px;
+  text-align: center;
+  color: #777;
+  border-top: 1px solid #eee;
+
+  p {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  small {
+    font-size: 12px;
+  }
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.contenido {
+  flex: 1;
+  padding: 24px;
+  background-color: #f5f7fa;
+}
+
+.pie-pagina {
+  padding: 15px;
+  text-align: center;
+  background-color: white;
+  color: #777;
+  font-size: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+// Diseño para teléfonos
+@media (max-width: 600px) {
+
+  .barra-superior {
+    height: 56px;
+  }
+
+  .contenedor-principal {
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+  }
+
+  .titulo {
+    font-size: 18px;
+  }
+
+  .subtitulo {
+    display: none;
+  }
+
+  .menu-lateral {
+    width: 230px;
+  }
+
+  .contenido {
+    padding: 14px;
+  }
+}

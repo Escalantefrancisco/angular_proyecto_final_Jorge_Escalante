@@ -1,1 +1,400 @@
-<p>student-form works!</p>
+
+<div class="pagina-formulario">
+
+  <div class="encabezado">
+    <h1>
+      {{ editando ? 'Editar estudiante' : 'Registrar estudiante' }}
+    </h1>
+
+    <p>
+      Completa los datos personales, académicos y de contacto.
+    </p>
+  </div>
+
+  @if (cargando) {
+    <div class="cargando">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando información...</p>
+    </div>
+  } @else if (editando &&!studentService.getById(estudianteId)) {
+    <mat-card class="tarjeta">
+      <mat-card-content>
+        <p class="error-general">{{ mensajeError }}</p>
+        <a mat-stroked-button routerLink="/estudiantes">
+          Volver a estudiantes
+        </a>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+
+    <form [formGroup]="formulario" (ngSubmit)="guardar()">
+
+      <!-- Datos personales -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person</mat-icon>
+            Datos personales
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="campos">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Código estudiantil</mat-label>
+
+              <input
+                matInput
+                formControlName="id"
+                placeholder="EST-001"
+                maxlength="24">
+
+              @if (mostrarError('id')) {
+                <mat-error>
+                  {{ obtenerError('id') }}
+                </mat-error>
+              }
+
+              @if (formulario.get('id')?.hasError('duplicate')) {
+                <mat-error>
+                  Este código ya está registrado.
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Nombres</mat-label>
+
+              <input
+                matInput
+                formControlName="nombres"
+                maxlength="80">
+
+              @if (mostrarError('nombres')) {
+                <mat-error>
+                  {{ obtenerError('nombres') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Apellidos</mat-label>
+
+              <input
+                matInput
+                formControlName="apellidos"
+                maxlength="80">
+
+              @if (mostrarError('apellidos')) {
+                <mat-error>
+                  {{ obtenerError('apellidos') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de nacimiento</mat-label>
+
+              <input
+                matInput
+                type="date"
+                formControlName="fechaNacimiento"
+                [max]="fechaMaxima">
+
+              @if (mostrarError('fechaNacimiento')) {
+                <mat-error>
+                  {{ obtenerError('fechaNacimiento') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Género</mat-label>
+
+              <mat-select formControlName="genero">
+                @for (genero of generos; track genero.id) {
+                  <mat-option [value]="genero.id">
+                    {{ genero.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (mostrarError('genero')) {
+                <mat-error>
+                  {{ obtenerError('genero') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Correo electrónico</mat-label>
+
+              <input
+                matInput
+                type="email"
+                formControlName="correo"
+                placeholder="ejemplo@correo.com"
+                maxlength="254">
+
+              @if (mostrarError('correo')) {
+                <mat-error>
+                  {{ obtenerError('correo') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              class="campo-completo">
+
+              <mat-label>Dirección de residencia</mat-label>
+
+              <textarea
+                matInput
+                formControlName="direccion"
+                rows="3"
+                maxlength="200">
+              </textarea>
+
+              @if (mostrarError('direccion')) {
+                <mat-error>
+                  {{ obtenerError('direccion') }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Datos académicos -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>school</mat-icon>
+            Datos académicos
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="campos">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Carrera universitaria</mat-label>
+
+              <mat-select formControlName="carreraId">
+                @for (carrera of carreras; track carrera.id) {
+                  <mat-option [value]="carrera.id">
+                    {{ carrera.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (mostrarError('carreraId')) {
+                <mat-error>
+                  Selecciona una carrera.
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Jornada</mat-label>
+
+              <mat-select formControlName="jornada">
+                @for (jornada of jornadas; track jornada.id) {
+                  <mat-option [value]="jornada.id">
+                    {{ jornada.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (mostrarError('jornada')) {
+                <mat-error>
+                  Selecciona una jornada.
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Modalidad</mat-label>
+
+              <mat-select formControlName="modalidad">
+                @for (modalidad of modalidades; track modalidad.id) {
+                  <mat-option [value]="modalidad.id">
+                    {{ modalidad.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (mostrarError('modalidad')) {
+                <mat-error>
+                  Selecciona una modalidad.
+                </mat-error>
+              }
+            </mat-form-field>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Contactos dinámicos -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>contacts</mat-icon>
+            Números de contacto
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Agrega uno o varios teléfonos.
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div formArrayName="contactos">
+
+            @for (contacto of contactos.controls; track contacto; let i = $index) {
+
+              <div
+                class="contacto"
+                [formGroupName]="i">
+
+                <div class="contacto-encabezado">
+                  <h3>Contacto {{ i + 1 }}</h3>
+
+                  <button
+                    mat-icon-button
+                    type="button"
+                    color="warn"
+                    aria-label="Eliminar contacto"
+                    [disabled]="contactos.length === 1"
+                    (click)="eliminarContacto(i)">
+
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+
+                <div class="campos-contacto">
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Número telefónico</mat-label>
+
+                    <input
+                      matInput
+                      type="tel"
+                      formControlName="numero"
+                      placeholder="55551234"
+                      maxlength="16">
+
+                    @if (
+                      contacto.get('numero')?.invalid &&
+                      (contacto.get('numero')?.touched ||
+                       contacto.get('numero')?.dirty)
+                    ) {
+                      <mat-error>
+                        {{ obtenerErrorContacto(i) }}
+                      </mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Tipo de contacto</mat-label>
+
+                    <mat-select formControlName="tipo">
+                      @for (tipo of tiposContacto; track tipo.id) {
+                        <mat-option [value]="tipo.id">
+                          {{ tipo.nombre }}
+                        </mat-option>
+                      }
+                    </mat-select>
+
+                    @if (
+                      contacto.get('tipo')?.invalid &&
+                      contacto.get('tipo')?.touched
+                    ) {
+                      <mat-error>
+                        Selecciona el tipo de contacto.
+                      </mat-error>
+                    }
+                  </mat-form-field>
+
+                  <div class="estado-contacto">
+                    <mat-checkbox formControlName="activo">
+                      Contacto activo
+                    </mat-checkbox>
+                  </div>
+
+                </div>
+              </div>
+
+            }
+
+          </div>
+
+          <button
+            mat-stroked-button
+            color="primary"
+            type="button"
+            (click)="agregarContacto()">
+
+            <mat-icon>add</mat-icon>
+            Agregar teléfono
+          </button>
+
+          @if (contactos.hasError('minContacts')) {
+            <p class="error-general">
+              Debes registrar al menos un contacto.
+            </p>
+          }
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Errores generales -->
+      @if (mensajeError) {
+        <div class="mensaje-error" role="alert">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ mensajeError }}</span>
+        </div>
+      }
+
+      <!-- Botones -->
+      <div class="acciones">
+
+        <a
+          mat-stroked-button
+          routerLink="/estudiantes">
+
+          <mat-icon>arrow_back</mat-icon>
+          Cancelar
+        </a>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="guardando">
+
+          <mat-icon>save</mat-icon>
+
+          {{ guardando ? 'Guardando...' :
+             (editando ? 'Actualizar estudiante' : 'Guardar estudiante') }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</div>

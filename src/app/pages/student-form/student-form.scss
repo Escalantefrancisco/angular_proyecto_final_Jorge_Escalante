@@ -1,0 +1,188 @@
+
+.pagina-formulario {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+.encabezado {
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #263238;
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: #757575;
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.tarjeta {
+  margin-bottom: 22px;
+  border-radius: 12px;
+  background-color: white;
+
+  mat-card-header {
+    padding: 20px 20px 10px;
+  }
+
+  mat-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+
+    mat-icon {
+      color: #1976d2;
+    }
+  }
+
+  mat-card-subtitle {
+    margin-top: 8px;
+  }
+
+  mat-card-content {
+    padding: 20px;
+  }
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 20px;
+}
+
+.campo-completo {
+  grid-column: 1 / -1;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.contacto {
+  padding: 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background-color: #fafafa;
+}
+
+.contacto-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #424242;
+  }
+}
+
+.campos-contacto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+.estado-contacto {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+
+  button,
+  a {
+    min-height: 44px;
+  }
+}
+
+.mensaje-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  margin: 16px 0;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.error-general {
+  color: #c62828;
+  font-size: 14px;
+}
+
+.cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 0;
+  color: #757575;
+}
+
+// Diseño para tabletas
+@media (max-width: 800px) {
+  .campos {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-completo {
+    grid-column: auto;
+  }
+
+  .campos-contacto {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Diseño para teléfonos
+@media (max-width: 600px) {
+  .pagina-formulario {
+    padding-bottom: 20px;
+  }
+
+  .encabezado h1 {
+    font-size: 22px;
+  }
+
+  .tarjeta {
+    mat-card-header {
+      padding: 16px 14px 8px;
+    }
+
+    mat-card-content {
+      padding: 16px 14px;
+    }
+  }
+
+  .contacto {
+    padding: 12px;
+  }
+
+  .acciones {
+    flex-direction: column-reverse;
+
+    button,
+    a {
+      width: 100%;
+    }
+  }
+}

@@ -1,1 +1,444 @@
-<p>enrollment-form works!</p>
+
+<div class="pagina-inscripcion">
+
+  <!-- Encabezado -->
+  <div class="encabezado">
+    <h1>
+      {{ editando ? 'Editar inscripción' : 'Nueva inscripción' }}
+    </h1>
+
+    <p>
+      Selecciona un estudiante, un período académico
+      y los cursos que deseas inscribir.
+    </p>
+  </div>
+
+  <!-- Cargando información -->
+  @if (cargando) {
+
+    <div class="cargando">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando información...</p>
+    </div>
+
+  } @else if (errorCarga) {
+
+    <mat-card class="tarjeta">
+      <mat-card-content>
+
+        <div class="mensaje-error">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ mensajeError }}</span>
+        </div>
+
+        <a
+          mat-stroked-button
+          routerLink="/inscripciones">
+
+          <mat-icon>arrow_back</mat-icon>
+          Volver a inscripciones
+        </a>
+
+      </mat-card-content>
+    </mat-card>
+
+  } @else {
+
+    <form
+      [formGroup]="formulario"
+      (ngSubmit)="guardar()">
+
+      <!-- Datos generales -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>assignment</mat-icon>
+            Datos de inscripción
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <div class="campos">
+
+            <mat-form-field appearance="outline">
+
+              <mat-label>
+                Código de inscripción
+              </mat-label>
+
+              <input
+                matInput
+                formControlName="id"
+                placeholder="INS-001"
+                maxlength="24">
+
+              @if (mostrarError('id')) {
+                <mat-error>
+                  {{ obtenerError('id') }}
+                </mat-error>
+              }
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+
+              <mat-label>
+                Fecha de inscripción
+              </mat-label>
+
+              <input
+                matInput
+                type="date"
+                formControlName="fechaInscripcion">
+
+              @if (mostrarError('fechaInscripcion')) {
+                <mat-error>
+                  {{ obtenerError('fechaInscripcion') }}
+                </mat-error>
+              }
+
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              class="campo-completo">
+
+              <mat-label>Estudiante</mat-label>
+
+              <mat-select
+                formControlName="estudianteId"
+                (selectionChange)="cambiarEstudiante()">
+
+                @for (
+                  estudiante of estudiantes;
+                  track estudiante.id
+                ) {
+
+                  <mat-option [value]="estudiante.id">
+                    {{ estudiante.id }} -
+                    {{ estudiante.nombres }}
+                    {{ estudiante.apellidos }}
+                  </mat-option>
+
+                }
+
+              </mat-select>
+
+              @if (mostrarError('estudianteId')) {
+                <mat-error>
+                  Selecciona un estudiante.
+                </mat-error>
+              }
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+
+              <mat-label>
+                Período académico
+              </mat-label>
+
+              <mat-select formControlName="periodoId">
+
+                @for (
+                  periodo of periodosDisponibles;
+                  track periodo.id
+                ) {
+
+                  <mat-option [value]="periodo.id">
+                    {{ periodo.nombre }}
+                  </mat-option>
+
+                }
+
+              </mat-select>
+
+              @if (mostrarError('periodoId')) {
+                <mat-error>
+                  Selecciona un período académico.
+                </mat-error>
+              }
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+
+              <mat-label>
+                Estado de inscripción
+              </mat-label>
+
+              <mat-select formControlName="estado">
+
+                @for (
+                  estado of estados;
+                  track estado.id
+                ) {
+
+                  <mat-option [value]="estado.id">
+                    {{ estado.nombre }}
+                  </mat-option>
+
+                }
+
+              </mat-select>
+
+              @if (mostrarError('estado')) {
+                <mat-error>
+                  Selecciona un estado.
+                </mat-error>
+              }
+
+            </mat-form-field>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Información del estudiante -->
+      @if (estudianteSeleccionado) {
+
+        <mat-card class="tarjeta">
+
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>school</mat-icon>
+              Información académica
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+
+            <div class="informacion-estudiante">
+
+              <div class="dato">
+                <span>Estudiante</span>
+
+                <strong>
+                  {{ estudianteSeleccionado.nombres }}
+                  {{ estudianteSeleccionado.apellidos }}
+                </strong>
+              </div>
+
+              <div class="dato">
+                <span>Carrera</span>
+
+                <strong>
+                  {{ obtenerCarrera(
+                    estudianteSeleccionado.carreraId
+                  ) }}
+                </strong>
+              </div>
+
+              <div class="dato">
+                <span>Jornada</span>
+
+                <strong>
+                  {{ estudianteSeleccionado.jornada }}
+                </strong>
+              </div>
+
+              <div class="dato">
+                <span>Modalidad</span>
+
+                <strong>
+                  {{ estudianteSeleccionado.modalidad }}
+                </strong>
+              </div>
+
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+
+      }
+
+      <!-- Selección de cursos -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>menu_book</mat-icon>
+            Selección de cursos
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Solo se muestran los cursos
+            correspondientes a la carrera del estudiante.
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          @if (!estudianteSeleccionado) {
+
+            <div class="mensaje-informativo">
+              <mat-icon>info</mat-icon>
+
+              <span>
+                Primero selecciona un estudiante
+                para visualizar sus cursos disponibles.
+              </span>
+            </div>
+
+          } @else if (cursosDisponibles.length === 0) {
+
+            <div class="mensaje-informativo">
+              <mat-icon>info</mat-icon>
+
+              <span>
+                No existen cursos disponibles
+                para esta carrera.
+              </span>
+            </div>
+
+          } @else {
+
+            <div
+              formArrayName="cursos"
+              class="lista-cursos">
+
+              @for (
+                curso of cursosDisponibles;
+                track curso.id;
+                let i = $index
+              ) {
+
+                <div class="curso">
+
+                  <mat-checkbox
+                    [formControlName]="i"
+                    (change)="actualizarTotales()">
+
+                    <span class="curso-nombre">
+                      {{ curso.nombre }}
+                    </span>
+
+                    <span class="curso-codigo">
+                      {{ curso.codigo }}
+                    </span>
+
+                  </mat-checkbox>
+
+                  <span class="creditos">
+                    {{ curso.creditos }}
+                    créditos
+                  </span>
+
+                </div>
+
+              }
+
+            </div>
+
+            <!-- Resumen -->
+            <div class="resumen-cursos">
+
+              <div>
+                <span>Cursos seleccionados</span>
+                <strong>{{ totalCursos }}</strong>
+              </div>
+
+              <div>
+                <span>Total de créditos</span>
+                <strong>{{ totalCreditos }}</strong>
+              </div>
+
+            </div>
+
+          }
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Observaciones -->
+      <mat-card class="tarjeta">
+
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>notes</mat-icon>
+            Observaciones
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <mat-form-field
+            appearance="outline"
+            class="campo-completo">
+
+            <mat-label>
+              Observaciones adicionales
+            </mat-label>
+
+            <textarea
+              matInput
+              formControlName="observaciones"
+              rows="4"
+              maxlength="500"
+              placeholder="Información adicional sobre la inscripción"></textarea>
+
+            <mat-hint align="end">
+              {{ formulario.get('observaciones')?.value?.length || 0 }}/500
+            </mat-hint>
+
+            @if (mostrarError('observaciones')) {
+              <mat-error>
+                {{ obtenerError('observaciones') }}
+              </mat-error>
+            }
+
+          </mat-form-field>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Errores -->
+      @if (mensajeError) {
+
+        <div class="mensaje-error" role="alert">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ mensajeError }}</span>
+        </div>
+
+      }
+
+      <!-- Botones -->
+      <div class="acciones">
+
+        <a
+          mat-stroked-button
+          routerLink="/inscripciones">
+
+          <mat-icon>arrow_back</mat-icon>
+          Cancelar
+
+        </a>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="boton-guardar"
+          [disabled]="guardando">
+
+          <mat-icon>save</mat-icon>
+
+          @if (guardando) {
+            Guardando...
+          } @else if (editando) {
+            Actualizar inscripción
+          } @else {
+            Guardar inscripción
+          }
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</div>

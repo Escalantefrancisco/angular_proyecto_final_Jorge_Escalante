@@ -1,0 +1,184 @@
+
+<h2 mat-dialog-title>
+  <mat-icon>assignment</mat-icon>
+  Detalles de inscripción
+</h2>
+
+<mat-dialog-content>
+
+  <div class="encabezado-inscripcion">
+
+    <div class="icono-principal">
+      <mat-icon>description</mat-icon>
+    </div>
+
+    <h3>{{ inscripcion.id }}</h3>
+
+    <mat-chip-set>
+      <mat-chip>
+        {{ inscripcion.estado }}
+      </mat-chip>
+    </mat-chip-set>
+
+  </div>
+
+  <h3 class="titulo-seccion">
+    Información general
+  </h3>
+
+  <div class="datos-grid">
+
+    <div class="dato">
+      <strong>Código de inscripción</strong>
+      <span>{{ inscripcion.id }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Fecha de inscripción</strong>
+      <span>
+        {{ inscripcion.fechaInscripcion | date:'dd/MM/yyyy':'UTC' }}
+      </span>
+    </div>
+
+    <div class="dato">
+      <strong>Estado</strong>
+      <span>{{ inscripcion.estado }}</span>
+    </div>
+
+    <div class="dato">
+      <strong>Período académico</strong>
+      <span>
+        {{ data.periodo?.nombre || inscripcion.periodoId }}
+      </span>
+    </div>
+
+  </div>
+
+  <h3 class="titulo-seccion">
+    Información del estudiante
+  </h3>
+
+  @if (data.estudiante) {
+
+    <div class="datos-grid">
+
+      <div class="dato">
+        <strong>Código estudiantil</strong>
+        <span>{{ data.estudiante.id }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Nombre completo</strong>
+        <span>
+          {{ data.estudiante.nombres }}
+          {{ data.estudiante.apellidos }}
+        </span>
+      </div>
+
+      <div class="dato">
+        <strong>Carrera</strong>
+        <span>
+          {{ obtenerCarrera(data.estudiante.carreraId) }}
+        </span>
+      </div>
+
+      <div class="dato">
+        <strong>Jornada</strong>
+        <span>{{ data.estudiante.jornada }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Modalidad</strong>
+        <span>{{ data.estudiante.modalidad }}</span>
+      </div>
+
+      <div class="dato">
+        <strong>Correo electrónico</strong>
+        <span>{{ data.estudiante.correo }}</span>
+      </div>
+
+    </div>
+
+  } @else {
+
+    <p class="advertencia">
+      El estudiante asociado a esta inscripción
+      ya no existe.
+    </p>
+
+  }
+
+  <h3 class="titulo-seccion">
+    Cursos inscritos
+  </h3>
+
+  <div class="lista-cursos">
+
+    @for (curso of data.cursos; track curso.id) {
+
+      <div class="curso">
+
+        <div>
+          <strong>{{ curso.nombre }}</strong>
+          <span>{{ curso.codigo }}</span>
+        </div>
+
+        <span class="creditos">
+          {{ curso.creditos }} créditos
+        </span>
+
+      </div>
+
+    } @empty {
+
+      <p>No se encontraron cursos en el catálogo.</p>
+
+    }
+
+  </div>
+
+  @if (cursosFaltantes.length > 0) {
+
+    <p class="advertencia">
+      No se encontraron estos cursos:
+      {{ cursosFaltantes.join(', ') }}.
+    </p>
+
+  }
+
+  <div class="resumen">
+
+    <div>
+      <span>Cursos encontrados</span>
+      <strong>{{ cantidadCursos }}</strong>
+    </div>
+
+    <div>
+      <span>Créditos encontrados</span>
+      <strong>{{ totalCreditos }}</strong>
+    </div>
+
+  </div>
+
+  <h3 class="titulo-seccion">
+    Observaciones
+  </h3>
+
+  <p class="observaciones">
+    {{ inscripcion.observaciones || 'Sin observaciones.' }}
+  </p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="cerrar()">
+
+    Cerrar
+
+  </button>
+
+</mat-dialog-actions>

@@ -42,3 +42,9 @@ export class ConfirmDialog {
     this.dialogRef.close(true);
   }
 }
+export interface ConfirmDialogData {
+  titulo: string;
+  mensaje: string;
+  textoConfirmar?: string;
+  advertencia?: string;
+}

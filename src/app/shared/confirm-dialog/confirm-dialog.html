@@ -10,8 +10,8 @@
 <mat-dialog-content>
   <p>{{ data.mensaje }}</p>
   <p class="advertencia">
-    Esta acción no se puede deshacer.
-  </p>
+  {{ data.advertencia || 'Esta acción no se puede deshacer.' }}
+</p>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

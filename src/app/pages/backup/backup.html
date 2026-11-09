@@ -1,1 +1,333 @@
-<p>backup works!</p>
+
+<div class="pagina-backup">
+
+  <!-- Encabezado -->
+  <div class="encabezado">
+
+    <h1>
+      <mat-icon>backup</mat-icon>
+      Respaldo y restauración
+    </h1>
+
+    <p>
+      Exporta los registros de UniRegistro
+      o recupera la información desde un archivo JSON.
+    </p>
+
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="estadisticas">
+
+    <mat-card class="tarjeta-estadistica">
+
+      <mat-card-content>
+
+        <div class="estadistica">
+
+          <div class="icono azul">
+            <mat-icon>people</mat-icon>
+          </div>
+
+          <div>
+            <h2>{{ totalEstudiantes }}</h2>
+            <p>Estudiantes registrados</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="tarjeta-estadistica">
+
+      <mat-card-content>
+
+        <div class="estadistica">
+
+          <div class="icono verde">
+            <mat-icon>assignment</mat-icon>
+          </div>
+
+          <div>
+            <h2>{{ totalInscripciones }}</h2>
+            <p>Inscripciones registradas</p>
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+
+  <!-- Exportación -->
+  <mat-card class="tarjeta">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        <mat-icon>file_download</mat-icon>
+        Exportar respaldo
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Descarga todos los estudiantes e inscripciones
+        en un archivo JSON.
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="informacion">
+
+        <mat-icon>info</mat-icon>
+
+        <p>
+          El respaldo incluirá los registros actuales,
+          la versión del formato y la fecha de exportación.
+          Los catálogos permanecen en los archivos JSON
+          del proyecto y no se duplican en el respaldo.
+        </p>
+
+      </div>
+
+      <button
+        mat-flat-button
+        type="button"
+        class="boton-exportar"
+        [disabled]="exportando || restaurando"
+        (click)="exportarRespaldo()">
+
+        <mat-icon>download</mat-icon>
+
+        {{ exportando ? 'Exportando...' : 'Descargar respaldo JSON' }}
+
+      </button>
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <!-- Importación -->
+  <mat-card class="tarjeta">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        <mat-icon>file_upload</mat-icon>
+        Importar respaldo
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Selecciona un respaldo generado por UniRegistro.
+        Se validará antes de reemplazar la información.
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="selector-archivo">
+
+        <mat-icon class="icono-archivo">
+          upload_file
+        </mat-icon>
+
+        <p>Selecciona un archivo JSON</p>
+
+        <span>
+          Tamaño máximo permitido: 5 MB
+        </span>
+
+        <input
+          #archivoInput
+          type="file"
+          accept=".json,application/json"
+          class="input-archivo"
+          [disabled]="validando || restaurando"
+          (change)="seleccionarArchivo($event)">
+
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="validando || restaurando"
+          (click)="archivoInput.click()">
+
+          <mat-icon>folder_open</mat-icon>
+          Buscar archivo
+
+        </button>
+
+      </div>
+
+      @if (archivoSeleccionado) {
+
+        <div class="archivo-seleccionado">
+
+          <div class="archivo-info">
+
+            <mat-icon>description</mat-icon>
+
+            <div>
+              <strong>
+                {{ archivoSeleccionado.name }}
+              </strong>
+
+              <span>
+                {{ archivoSeleccionado.size / 1024
+                   | number:'1.0-1' }} KB
+              </span>
+            </div>
+
+          </div>
+
+          <button
+            mat-icon-button
+            type="button"
+            aria-label="Quitar archivo"
+            [disabled]="restaurando"
+            (click)="limpiarSeleccion()">
+
+            <mat-icon>close</mat-icon>
+
+          </button>
+
+        </div>
+
+      }
+
+      @if (validando) {
+
+        <div class="cargando">
+
+          <mat-spinner diameter="32"></mat-spinner>
+
+          <p>Validando el respaldo...</p>
+
+        </div>
+
+      }
+
+      <!-- Resultado correcto -->
+      @if (resultado?.valido && !validando) {
+
+        <div class="resultado valido">
+
+          <div class="resultado-titulo">
+
+            <mat-icon>check_circle</mat-icon>
+
+            <strong>
+              Respaldo validado correctamente
+            </strong>
+
+          </div>
+
+          <p>
+            El archivo cumple las reglas de validación.
+          </p>
+
+          <div class="resumen-importacion">
+
+            <div>
+              <span>Estudiantes</span>
+              <strong>
+                {{ resultado?.totalEstudiantes }}
+              </strong>
+            </div>
+
+            <div>
+              <span>Inscripciones</span>
+              <strong>
+                {{ resultado?.totalInscripciones }}
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="advertencia">
+
+          <mat-icon>warning</mat-icon>
+
+          <p>
+            La restauración reemplazará todos los
+            estudiantes e inscripciones actuales.
+            Se recomienda exportar un respaldo primero.
+          </p>
+
+        </div>
+
+        <button
+          mat-flat-button
+          type="button"
+          class="boton-restaurar"
+          [disabled]="restaurando"
+          (click)="confirmarRestauracion()">
+
+          <mat-icon>restore</mat-icon>
+
+          {{ restaurando ? 'Restaurando...' : 'Restaurar respaldo' }}
+
+        </button>
+
+      }
+
+      <!-- Resultado con errores -->
+      @if (resultado && !resultado.valido && !validando) {
+
+        <div class="resultado invalido" role="alert">
+
+          <div class="resultado-titulo">
+
+            <mat-icon>error</mat-icon>
+
+            <strong>
+              El respaldo contiene errores
+            </strong>
+
+          </div>
+
+          <p>
+            No se modificaron los datos actuales.
+            Corrige los siguientes problemas:
+          </p>
+
+          <ul>
+            @for (error of resultado.errores; track $index) {
+              <li>{{ error }}</li>
+            }
+          </ul>
+
+        </div>
+
+      }
+
+      @if (mensajeError) {
+
+        <div class="mensaje-error" role="alert">
+          <mat-icon>error_outline</mat-icon>
+          {{ mensajeError }}
+        </div>
+
+      }
+
+    </mat-card-content>
+
+  </mat-card>
+
+  <div class="acciones-finales">
+
+    <a mat-stroked-button routerLink="/">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al inicio
+    </a>
+
+  </div>
+
+</div>
